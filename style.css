@@ -1,0 +1,957 @@
+/* =============================================
+   MONOPOLY — OUGUIYA EDITION  |  style.css
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Tajawal:wght@400;500;700&display=swap');
+
+:root {
+  --bg:       #0d1117;
+  --panel:    #161b22;
+  --card:     #1c2333;
+  --border:   rgba(255,255,255,0.08);
+  --gold:     #f0b429;
+  --gold2:    #ffcf6b;
+  --red:      #e53e3e;
+  --green:    #38a169;
+  --blue:     #3182ce;
+  --teal:     #00b5d8;
+  --text:     #e2e8f0;
+  --muted:    #718096;
+  --shadow:   rgba(0,0,0,0.5);
+
+  /* Group Colors */
+  --brown:    #8B4513;
+  --lblue:    #add8e6;
+  --pink:     #d63384;
+  --orange:   #e67e22;
+  --c-red:    #e53e3e;
+  --yellow:   #ecc94b;
+  --c-green:  #276749;
+  --dblue:    #1a365d;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 14px; }
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── SCREENS ── */
+.screen { display: none; }
+.screen.active { display: flex; }
+
+/* ═══════════════════════════════
+   SETUP SCREEN
+═══════════════════════════════ */
+#setup-screen {
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2rem;
+  position: relative;
+}
+
+.setup-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(240,180,41,0.15) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 80% at 80% 100%, rgba(49,130,206,0.1) 0%, transparent 70%),
+    #0d1117;
+}
+
+.setup-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+.logo-wrap { text-align: center; }
+
+.logo-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 10vw, 5.5rem);
+  font-weight: 900;
+  color: var(--gold);
+  letter-spacing: -2px;
+  line-height: 1;
+  text-shadow: 0 0 60px rgba(240,180,41,0.4), 0 4px 20px rgba(0,0,0,0.6);
+}
+
+.logo-sub {
+  font-size: 0.85rem;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-top: 0.4rem;
+}
+
+.setup-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2.5rem;
+  width: 100%;
+  box-shadow: 0 24px 80px var(--shadow);
+}
+
+.setup-card h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--gold);
+  margin-bottom: 1.2rem;
+  text-align: center;
+}
+
+.player-count-btns {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.cnt-btn {
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--card);
+  color: var(--muted);
+  font-size: 1.2rem;
+  font-family: 'Playfair Display', serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.cnt-btn:hover, .cnt-btn.active {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(240,180,41,0.1);
+}
+
+.player-setup-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.player-color-swatch {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+
+.setup-input {
+  flex: 1;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 0.6rem 1rem;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.setup-input:focus { border-color: var(--gold); }
+
+.token-select {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 0.6rem;
+  font-size: 1.2rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.btn-start {
+  width: 100%;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  background: var(--gold);
+  color: #1a1100;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all 0.2s;
+  box-shadow: 0 8px 25px rgba(240,180,41,0.3);
+}
+.btn-start:hover {
+  background: var(--gold2);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(240,180,41,0.4);
+}
+
+/* ═══════════════════════════════
+   GAME SCREEN LAYOUT
+═══════════════════════════════ */
+#game-screen {
+  min-height: 100vh;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.board-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  min-width: 0;
+}
+
+/* ═══════════════════════════════
+   BOARD
+═══════════════════════════════ */
+.board {
+  display: grid;
+  grid-template-columns: 80px repeat(9, 1fr) 80px;
+  grid-template-rows: 80px repeat(9, 1fr) 80px;
+  width: min(calc(100vh - 2rem), calc(100vw - 380px));
+  height: min(calc(100vh - 2rem), calc(100vw - 380px));
+  background: #e8f5e9;
+  border: 3px solid #1b5e20;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+
+/* ── CELLS ── */
+.cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  border: 1px solid #1b5e20;
+  background: #fff;
+  cursor: pointer;
+  overflow: hidden;
+  transition: filter 0.15s;
+  padding: 2px;
+}
+.cell:hover { filter: brightness(0.88); }
+
+.cell-color-bar {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.cell-name {
+  font-size: 0.38rem;
+  text-align: center;
+  color: #111;
+  line-height: 1.2;
+  margin-top: 1px;
+  font-family: 'Tajawal', sans-serif;
+  font-weight: 700;
+  word-break: break-word;
+}
+
+.cell-price {
+  font-size: 0.32rem;
+  color: #333;
+  margin-top: 1px;
+}
+
+.cell-icon {
+  font-size: 1rem;
+  margin-top: 2px;
+}
+
+/* Corner cells */
+.cell-corner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  background: #c8e6c9;
+}
+.cell-corner .corner-label {
+  font-size: 0.42rem;
+  font-weight: 700;
+  text-align: center;
+  color: #1b5e20;
+  line-height: 1.2;
+}
+.cell-corner .corner-icon { font-size: 1.6rem; }
+
+/* Center */
+.board-center {
+  grid-column: 2 / 11;
+  grid-row: 2 / 11;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e8f5e9;
+  border: none;
+}
+.board-center-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.2rem, 3vw, 2.8rem);
+  font-weight: 900;
+  color: #1b5e20;
+  text-align: center;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transform: rotate(-45deg);
+  user-select: none;
+}
+.board-center-sub {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 0.5rem;
+  color: #388e3c;
+  margin-top: 0.3em;
+  letter-spacing: 1px;
+}
+
+/* Left/Right column cells — rotated */
+.cell-left  { writing-mode: initial; transform: rotate(90deg); }
+.cell-right { writing-mode: initial; transform: rotate(-90deg); }
+
+/* Station / Utility */
+.cell-station .cell-icon, .cell-utility .cell-icon { font-size: 1.2rem; }
+
+/* Tokens on board */
+.cell-tokens {
+  position: absolute;
+  bottom: 2px;
+  left: 0; right: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1px;
+  z-index: 5;
+}
+.token {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0,0,0,0.5);
+  font-size: 0.55rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+}
+
+/* Houses & hotels on board */
+.cell-buildings {
+  position: absolute;
+  top: 14px;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 1px;
+  z-index: 4;
+  flex-wrap: wrap;
+}
+.house-chip {
+  width: 6px; height: 6px;
+  background: #27ae60;
+  border-radius: 1px;
+  border: 1px solid #145a32;
+}
+.hotel-chip {
+  width: 8px; height: 6px;
+  background: #e74c3c;
+  border-radius: 1px;
+  border: 1px solid #922b21;
+}
+
+/* Mortgage overlay */
+.cell-mortgaged::after {
+  content: 'MORTGAGED';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  color: #ffd700;
+  font-size: 0.28rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.5px;
+}
+
+/* Owner dot */
+.owner-dot {
+  position: absolute;
+  top: 2px; right: 2px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.7);
+  z-index: 3;
+}
+
+/* ═══════════════════════════════
+   RIGHT PANEL
+═══════════════════════════════ */
+.right-panel {
+  width: 320px;
+  min-width: 280px;
+  background: var(--panel);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.panel-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--gold);
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.btn-icon {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+}
+.btn-icon:hover { color: var(--gold); border-color: var(--gold); }
+
+.panel-section {
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-title {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+  margin-bottom: 0.7rem;
+  font-weight: 700;
+}
+
+/* Player cards */
+.player-card {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 8px;
+  margin-bottom: 0.4rem;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+  cursor: default;
+}
+.player-card.active-turn {
+  border-color: var(--gold);
+  background: rgba(240,180,41,0.07);
+}
+.player-card.bankrupt { opacity: 0.4; }
+
+.p-token {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+  border: 2px solid rgba(255,255,255,0.3);
+}
+.p-info { flex: 1; min-width: 0; }
+.p-name {
+  font-weight: 700;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.p-pos  { font-size: 0.65rem; color: var(--muted); }
+.p-money { font-size: 0.82rem; font-weight: 700; color: var(--gold); white-space: nowrap; }
+
+/* Turn info */
+.turn-info {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.turn-avatar {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 2px solid rgba(255,255,255,0.3);
+}
+.turn-name  { font-weight: 700; font-size: 1rem; }
+.turn-money { color: var(--gold); font-size: 0.85rem; }
+
+.jail-notice {
+  margin-top: 0.5rem;
+  background: rgba(229,62,62,0.15);
+  border: 1px solid rgba(229,62,62,0.4);
+  border-radius: 6px;
+  padding: 0.4rem 0.7rem;
+  font-size: 0.78rem;
+  color: #fc8181;
+}
+
+/* Dice */
+.dice-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.die {
+  width: 46px; height: 46px;
+  background: #fff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+  font-weight: 900;
+  color: #111;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4), inset 0 -3px 0 rgba(0,0,0,0.15);
+  transition: transform 0.3s;
+  user-select: none;
+}
+.die.rolling { animation: dieRoll 0.5s ease; }
+@keyframes dieRoll {
+  0%   { transform: rotate(0)   scale(1); }
+  20%  { transform: rotate(20deg)  scale(1.2); }
+  50%  { transform: rotate(-15deg) scale(0.9); }
+  80%  { transform: rotate(10deg)  scale(1.1); }
+  100% { transform: rotate(0)   scale(1); }
+}
+.dice-sum {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: var(--gold);
+  flex: 1;
+  text-align: right;
+}
+.doubles-notice {
+  margin-top: 0.5rem;
+  font-size: 0.78rem;
+  color: var(--gold);
+  text-align: center;
+  animation: pulse 1s infinite alternate;
+}
+@keyframes pulse { from { opacity:0.6; } to { opacity:1; } }
+
+/* Action buttons */
+.action-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.btn-action {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  transition: all 0.18s;
+  text-align: left;
+}
+.btn-action:hover { transform: translateY(-1px); filter: brightness(1.1); }
+.btn-primary   { background: var(--gold);  color: #1a1100; }
+.btn-secondary { background: var(--card);  color: var(--text); border: 1px solid var(--border); }
+.btn-secondary:hover { border-color: var(--gold); }
+.btn-warn      { background: #ed8936; color: #1a1100; }
+.btn-trade     { background: #3182ce; color: white; }
+.btn-danger    { background: var(--red); color: white; }
+
+/* Log */
+.log-section { flex: 1; }
+.game-log {
+  max-height: 180px;
+  overflow-y: auto;
+  font-size: 0.72rem;
+  line-height: 1.6;
+}
+.log-entry {
+  padding: 3px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+}
+.log-entry .log-hl { color: var(--text); font-weight: 600; }
+.log-entry .log-money-gain { color: #68d391; }
+.log-entry .log-money-loss { color: #fc8181; }
+
+/* ═══════════════════════════════
+   MODALS
+═══════════════════════════════ */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  backdrop-filter: blur(3px);
+}
+.modal-overlay.open { display: flex; }
+
+.modal {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: 0 30px 90px rgba(0,0,0,0.7);
+  animation: modalIn 0.22s ease;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+@keyframes modalIn {
+  from { transform: scale(0.92) translateY(16px); opacity: 0; }
+  to   { transform: scale(1)    translateY(0);    opacity: 1; }
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  z-index: 5;
+}
+.modal-close:hover { color: var(--red); border-color: var(--red); }
+
+.modal-title {
+  font-family: 'Playfair Display', serif;
+  color: var(--gold);
+  font-size: 1.3rem;
+  padding: 1.5rem 1.5rem 0.5rem;
+}
+.modal-subtitle {
+  font-size: 0.78rem;
+  color: var(--muted);
+  padding: 0 1.5rem 1rem;
+}
+
+/* Property Modal */
+.prop-modal-inner { width: 380px; max-width: 95vw; }
+
+.prop-color-band {
+  height: 10px;
+  border-radius: 18px 18px 0 0;
+}
+
+.prop-modal-body { padding: 1.2rem 1.5rem 1.5rem; }
+
+.prop-modal-icon { font-size: 2rem; text-align: center; margin-bottom: 0.3rem; }
+.prop-modal-name {
+  font-family: 'Playfair Display', serif;
+  color: var(--gold);
+  font-size: 1.4rem;
+  text-align: center;
+  margin-bottom: 0.2rem;
+}
+.prop-modal-type {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.prop-rent-table { margin-bottom: 1rem; }
+.rent-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.82rem;
+}
+.rent-row .rl { color: var(--muted); }
+.rent-row .rv { font-weight: 700; }
+.rent-row.active { background: rgba(240,180,41,0.08); border-radius: 4px; padding-left: 4px; }
+
+.prop-modal-owner {
+  font-size: 0.82rem;
+  margin-bottom: 0.8rem;
+  padding: 0.5rem;
+  background: var(--card);
+  border-radius: 6px;
+}
+
+.prop-modal-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.prop-modal-actions .btn-action { width: auto; flex: 1; min-width: 100px; text-align: center; }
+
+/* Card Modal */
+.card-modal-inner {
+  width: 340px;
+  max-width: 95vw;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+}
+.card-modal-icon { font-size: 3.5rem; }
+.card-modal-type {
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.card-modal-text {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.4;
+}
+.card-modal-effect {
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+}
+.card-modal-effect.gain { color: #68d391; background: rgba(104,211,145,0.1); }
+.card-modal-effect.loss { color: #fc8181; background: rgba(252,129,129,0.1); }
+.card-modal-effect.move { color: var(--gold); background: rgba(240,180,41,0.1); }
+
+/* Trade Modal */
+.trade-modal-inner { width: 680px; max-width: 95vw; padding-bottom: 1.5rem; }
+
+.trade-grid {
+  display: flex;
+  gap: 1rem;
+  padding: 0 1.5rem;
+  align-items: flex-start;
+}
+.trade-side { flex: 1; }
+.trade-side-title {
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 0.7rem;
+  font-size: 0.9rem;
+}
+.trade-money-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.trade-input {
+  flex: 1;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.4rem 0.7rem;
+  border-radius: 6px;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 0.85rem;
+  outline: none;
+  width: 100%;
+}
+.trade-input:focus { border-color: var(--gold); }
+.trade-vs {
+  font-size: 1.5rem;
+  color: var(--muted);
+  padding-top: 1.5rem;
+  flex-shrink: 0;
+}
+.trade-select {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--gold);
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 0.85rem;
+  outline: none;
+  width: 100%;
+}
+.trade-prop-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.4rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-size: 0.78rem;
+  margin-bottom: 2px;
+}
+.trade-prop-item:hover { background: var(--card); }
+.trade-prop-item.selected { background: rgba(240,180,41,0.12); border: 1px solid rgba(240,180,41,0.3); }
+.trade-prop-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.trade-actions { display: flex; gap: 0.7rem; padding: 0 1.5rem; margin-top: 1rem; }
+.trade-actions .btn-action { flex: 1; text-align: center; }
+
+/* Mortgage Modal */
+.mortgage-modal-inner { width: 420px; max-width: 95vw; padding-bottom: 1.5rem; }
+#mortgage-list { padding: 0 1.5rem; max-height: 50vh; overflow-y: auto; }
+.mortgage-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.82rem;
+}
+.mortgage-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.mortgage-name { flex: 1; }
+.mortgage-val { color: var(--muted); margin-right: 0.5rem; }
+.btn-mortgage-toggle {
+  padding: 0.25rem 0.6rem;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.75rem;
+  transition: all 0.15s;
+}
+.btn-mortgage-toggle:hover { border-color: var(--gold); color: var(--gold); }
+
+/* Auction Modal */
+.auction-modal-inner { width: 360px; max-width: 95vw; padding: 1.5rem; text-align: center; }
+.auction-prop-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+.auction-current {
+  font-size: 1rem;
+  color: var(--text);
+  margin-bottom: 0.3rem;
+}
+.auction-bidder { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.7rem; }
+.auction-bids {
+  max-height: 120px;
+  overflow-y: auto;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 0.8rem;
+  text-align: left;
+}
+.auction-controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+.auction-controls .trade-input { max-width: 100px; }
+.auction-controls .btn-action { flex: 1; text-align: center; }
+
+/* ═══════════════════════════════
+   WINNER SCREEN
+═══════════════════════════════ */
+#winner-screen {
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  padding: 2rem;
+}
+.winner-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(240,180,41,0.2) 0%, transparent 70%), #0d1117;
+}
+.winner-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.winner-trophy { font-size: 5rem; animation: bounce 1s infinite alternate; }
+@keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-12px); } }
+.winner-label {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 8vw, 4rem);
+  color: var(--gold);
+  font-weight: 900;
+  text-shadow: 0 0 40px rgba(240,180,41,0.5);
+}
+.winner-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  color: var(--text);
+}
+.winner-stats {
+  font-size: 0.9rem;
+  color: var(--muted);
+  max-width: 300px;
+  line-height: 1.8;
+}
+
+/* ═══════════════════════════════
+   SCROLLBAR
+═══════════════════════════════ */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+/* ═══════════════════════════════
+   RESPONSIVE
+═══════════════════════════════ */
+@media (max-width: 900px) {
+  #game-screen { flex-direction: column; }
+  .right-panel { width: 100%; height: auto; border-left: none; border-top: 1px solid var(--border); }
+  .board { width: min(98vw, 98vw); height: min(98vw, 98vw); }
+  .board-container { padding: 0.5rem; }
+}
