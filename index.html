@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Monopoly — Ouguiya Edition</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- SETUP SCREEN -->
+<div id="setup-screen" class="screen active">
+  <div class="setup-bg"></div>
+  <div class="setup-content">
+    <div class="logo-wrap">
+      <div class="logo-title">MONOPOLY</div>
+      <div class="logo-sub">نسخة الأوقية &middot; Ouguiya Edition</div>
+    </div>
+    <div class="setup-card">
+      <h2>Select Number of Players</h2>
+      <div class="player-count-btns">
+        <button class="cnt-btn active" data-count="2">2</button>
+        <button class="cnt-btn" data-count="3">3</button>
+        <button class="cnt-btn" data-count="4">4</button>
+      </div>
+      <div id="player-setup-rows"></div>
+      <button class="btn-start" onclick="Game.start()">🎲 Start Game</button>
+    </div>
+  </div>
+</div>
+
+<!-- GAME SCREEN -->
+<div id="game-screen" class="screen">
+  <div class="board-container">
+    <div id="board" class="board"></div>
+  </div>
+  <div class="right-panel">
+    <div class="panel-header">
+      <span class="panel-logo">MONOPOLY</span>
+      <button class="btn-icon" onclick="Game.newGame()" title="New Game">↩ New</button>
+    </div>
+
+    <div class="panel-section">
+      <div class="section-title">Players</div>
+      <div id="players-list"></div>
+    </div>
+
+    <div class="panel-section">
+      <div class="section-title">Current Turn</div>
+      <div id="turn-info" class="turn-info">
+        <div class="turn-avatar" id="turn-avatar"></div>
+        <div>
+          <div class="turn-name" id="turn-name">—</div>
+          <div class="turn-money" id="turn-money">—</div>
+        </div>
+      </div>
+      <div id="jail-notice" class="jail-notice" style="display:none">⛓️ In Habis Dar Na3im</div>
+    </div>
+
+    <div class="panel-section">
+      <div class="section-title">Dice</div>
+      <div class="dice-row">
+        <div class="die" id="die1">?</div>
+        <div class="die" id="die2">?</div>
+        <div class="dice-sum" id="dice-sum">—</div>
+      </div>
+      <div id="doubles-notice" class="doubles-notice" style="display:none">🎉 Doubles! Roll again!</div>
+    </div>
+
+    <div class="panel-section">
+      <div class="section-title">Actions</div>
+      <div class="action-btns">
+        <button class="btn-action btn-primary"   id="btn-roll"      onclick="Game.rollDice()">🎲 Roll Dice</button>
+        <button class="btn-action btn-warn"       id="btn-jail-pay"  onclick="Game.payJailFine()"       style="display:none">💰 Pay Jail Fine (50)</button>
+        <button class="btn-action btn-secondary"  id="btn-end"       onclick="Game.endTurn()"            style="display:none">➡️ End Turn</button>
+        <button class="btn-action btn-trade"      id="btn-trade"     onclick="UI.openTradeModal()"       style="display:none">🤝 Trade</button>
+        <button class="btn-action btn-secondary"  id="btn-mortgage"  onclick="UI.openMortgagePanel()"    style="display:none">🏦 Mortgage</button>
+        <button class="btn-action btn-danger"     id="btn-bankrupt"  onclick="Game.declareBankruptcy()"  style="display:none">💸 Bankruptcy</button>
+      </div>
+    </div>
+
+    <div class="panel-section log-section">
+      <div class="section-title">Game Log</div>
+      <div id="game-log" class="game-log"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROPERTY MODAL -->
+<div id="prop-modal" class="modal-overlay" onclick="UI.closePropModal(event)">
+  <div class="modal prop-modal-inner">
+    <div class="prop-color-band" id="prop-color-band"></div>
+    <button class="modal-close" onclick="UI.closePropModal()">✕</button>
+    <div class="prop-modal-body">
+      <div class="prop-modal-icon" id="prop-modal-icon"></div>
+      <h2 class="prop-modal-name" id="prop-modal-name"></h2>
+      <div class="prop-modal-type" id="prop-modal-type"></div>
+      <div class="prop-rent-table" id="prop-rent-table"></div>
+      <div class="prop-modal-owner" id="prop-modal-owner"></div>
+      <div class="prop-modal-actions" id="prop-modal-actions"></div>
+    </div>
+  </div>
+</div>
+
+<!-- CARD MODAL -->
+<div id="card-modal" class="modal-overlay">
+  <div class="modal card-modal-inner">
+    <div class="card-modal-icon" id="card-icon"></div>
+    <div class="card-modal-type" id="card-type"></div>
+    <div class="card-modal-text" id="card-text"></div>
+    <div class="card-modal-effect" id="card-effect"></div>
+    <button class="btn-action btn-primary" onclick="UI.closeCardModal()">OK</button>
+  </div>
+</div>
+
+<!-- TRADE MODAL -->
+<div id="trade-modal" class="modal-overlay" onclick="UI.closeTradeModal(event)">
+  <div class="modal trade-modal-inner">
+    <button class="modal-close" onclick="UI.closeTradeModal()">✕</button>
+    <h2 class="modal-title">🤝 Trade</h2>
+    <div class="trade-grid">
+      <div class="trade-side">
+        <div class="trade-side-title" id="trade-offer-title">Your Offer</div>
+        <div class="trade-money-row">
+          <label>Cash (أوقية):</label>
+          <input type="number" id="trade-offer-cash" min="0" value="0" class="trade-input">
+        </div>
+        <div class="trade-props" id="trade-offer-props"></div>
+      </div>
+      <div class="trade-vs">⇄</div>
+      <div class="trade-side">
+        <div class="trade-side-title">
+          <select id="trade-target-select" class="trade-select" onchange="UI.updateTradeTarget()"></select>
+        </div>
+        <div class="trade-money-row">
+          <label>Cash (أوقية):</label>
+          <input type="number" id="trade-recv-cash" min="0" value="0" class="trade-input">
+        </div>
+        <div class="trade-props" id="trade-recv-props"></div>
+      </div>
+    </div>
+    <div class="trade-actions">
+      <button class="btn-action btn-primary" onclick="Game.executeTrade()">Propose Trade</button>
+      <button class="btn-action btn-secondary" onclick="UI.closeTradeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- MORTGAGE MODAL -->
+<div id="mortgage-modal" class="modal-overlay" onclick="UI.closeMortgagePanel(event)">
+  <div class="modal mortgage-modal-inner">
+    <button class="modal-close" onclick="UI.closeMortgagePanel()">✕</button>
+    <h2 class="modal-title">🏦 Mortgage / Unmortgage</h2>
+    <p class="modal-subtitle">Mortgage: receive 50% of price. Unmortgage: pay back 55%.</p>
+    <div id="mortgage-list"></div>
+    <button class="btn-action btn-secondary" style="margin-top:1rem;width:100%" onclick="UI.closeMortgagePanel()">Done</button>
+  </div>
+</div>
+
+<!-- AUCTION MODAL -->
+<div id="auction-modal" class="modal-overlay">
+  <div class="modal auction-modal-inner">
+    <h2 class="modal-title">🔨 Auction</h2>
+    <div class="auction-prop-name" id="auction-prop-name"></div>
+    <div class="auction-current" id="auction-current">Starting bid: 1 أوقية</div>
+    <div class="auction-bidder" id="auction-bidder"></div>
+    <div class="auction-bids" id="auction-bids"></div>
+    <div class="auction-controls">
+      <input type="number" id="auction-bid-input" class="trade-input" placeholder="Your bid" min="1">
+      <button class="btn-action btn-primary" onclick="Game.placeBid()">Bid</button>
+      <button class="btn-action btn-secondary" onclick="Game.passAuction()">Pass</button>
+    </div>
+  </div>
+</div>
+
+<!-- WINNER SCREEN -->
+<div id="winner-screen" class="screen">
+  <div class="winner-bg"></div>
+  <div class="winner-content">
+    <div class="winner-trophy">🏆</div>
+    <div class="winner-label">WINNER!</div>
+    <div class="winner-name" id="winner-name"></div>
+    <div class="winner-stats" id="winner-stats"></div>
+    <button class="btn-start" onclick="Game.newGame()">Play Again</button>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/board.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>
